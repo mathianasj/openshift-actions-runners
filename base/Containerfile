@@ -46,7 +46,7 @@ RUN chown -R ${USERNAME}:0 /home/${USERNAME}/ && \
     chgrp -R 0 /home/${USERNAME}/ && \
     chmod -R g=u /home/${USERNAME}/
 
-COPY --chown=${USERNAME}:0 entrypoint.sh uid.sh register.sh get_github_app_token.sh ./
+COPY --chown=${USERNAME}:0 entrypoint.sh logger.bash update-status uid.sh register.sh get_github_app_token.sh ./
 
 USER $UID
 
