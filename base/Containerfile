@@ -40,6 +40,13 @@ COPY --chown=${USERNAME}:0 get-runner-release.sh ./
 RUN ./get-runner-release.sh
 RUN ./bin/installdependencies.sh
 
+RUN cd "$RUNNER_ASSETS_DIR" \
+    && curl -f -L -o runner-container-hooks.zip https://github.com/actions/runner-container-hooks/releases/download/v${RUNNER_CONTAINER_HOOKS_VERSION}/actions-runner-hooks-k8s-${RUNNER_CONTAINER_HOOKS_VERSION}.zip \
+    && unzip ./runner-container-hooks.zip -d ./k8s \
+    && rm runner-container-hooks.zip
+    
+COPY hooks /etc/arc/hooks/
+
 # Set permissions so that we can allow the openshift-generated container user to access home.
 # https://docs.openshift.com/container-platform/3.3/creating_images/guidelines.html#openshift-container-platform-specific-guidelines
 RUN chown -R ${USERNAME}:0 /home/${USERNAME}/ && \
