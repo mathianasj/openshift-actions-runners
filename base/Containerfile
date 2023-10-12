@@ -8,6 +8,10 @@ RUN dnf -y upgrade --security && \
     curl git jq hostname procps findutils which openssl unzip bzip2 nodejs yarnpkg && \
     dnf clean all
 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    sudo ./aws/install
+
 # The UID env var should be used in child Containerfile.
 ENV UID=1000
 ENV GID=0
